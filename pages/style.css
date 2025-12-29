@@ -1,0 +1,58 @@
+/* ===============================
+   GLOBAL STYLES
+================================ */
+body {
+    background-color: #0e1117;
+    color: #ffffff;
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+/* ===============================
+   ECO TIPS SECTION
+================================ */
+.eco-wrapper {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 40px;
+    position: relative;
+}
+
+.eco-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    letter-spacing: 0.3px;
+}
+
+.eco-track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: eco-scroll 40s linear infinite;
+}
+
+.eco-pill {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 8px 18px;
+    border-radius: 18px;
+    font-size: 14px;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f1f1f1;
+}
+
+/* Seamless infinite scroll */
+@keyframes eco-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover */
+.eco-wrapper:hover .eco-track {
+    animation-play-state: paused;
+}

@@ -1,0 +1,11 @@
+# Python cache
+__pycache__/
+
+# Environment files
+.env
+
+# ML model files
+*.pkl
+
+# CSV (if generated data)
+users.csv
