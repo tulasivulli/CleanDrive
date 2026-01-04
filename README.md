@@ -11,10 +11,8 @@ The platform provides an interactive and user-friendly interface to help users u
   - Login and registration system for users
 - 📊 **CO₂ Emission Prediction**
   - Predicts emissions based on vehicle specifications
-- 🤖 **AI Assistant**
+- 🤖 **Eco Advisor**
   - Helps users understand predictions and system usage
-- 📈 **Interactive Dashboard**
-  - Displays prediction results and insights
 - 🌐 **Web-Based Interface**
   - Simple, clean, and responsive design
 
