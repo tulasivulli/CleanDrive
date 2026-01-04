@@ -1,15 +1,23 @@
 import streamlit as st
 import random
+from pathlib import Path  
+ # ✅ added
+import navbar
+from layout import base_layout
 
-# -----------------------------
-# Page Config (MUST BE FIRST)
-# -----------------------------
+# --------------------------------------------------
+# PAGE CONFIG (ABSOLUTELY FIRST)
+# --------------------------------------------------
 st.set_page_config(
-    page_title="AI Assistant | CleanDrive",
-    page_icon="🤖",
+    page_title="Login | CleanDrive",
+    page_icon="🌱",
     layout="wide"
 )
 
+# --------------------------------------------------
+# BASE LAYOUT (NAVBAR COMES FROM HERE)
+# --------------------------------------------------
+base_layout()
 # -----------------------------
 # 🔐 Access Control
 # -----------------------------
@@ -18,42 +26,23 @@ if "logged_in" not in st.session_state or not st.session_state.logged_in:
     st.switch_page("pages/login.py")
 
 # -----------------------------
-# 🔝 Top Bar (Right-aligned Logout)
+# Load external CSS (added)
 # -----------------------------
-top_left, top_right = st.columns([6, 1])
+st.markdown(
+    """
+    <style>
+    /* Hide Streamlit sidebar */
+    [data-testid="stSidebar"] {
+        display: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-with top_right:
-    if st.button("Logout", key="ai_logout_main"):
-        st.session_state.show_logout_dialog = True
+with open("pages/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# -----------------------------
-# 🔐 Logout Confirmation Dialog
-# -----------------------------
-if st.session_state.get("show_logout_dialog", False):
-
-    @st.dialog("Logout Confirmation")
-    def logout_dialog():
-        st.write(
-            "Are you sure you want to logout?\n\n"
-            
-        )
-
-        c1, c2 = st.columns(2)
-
-        with c1:
-            if st.button("Cancel", key="ai_logout_cancel"):
-                st.session_state.show_logout_dialog = False
-                st.rerun()
-
-        with c2:
-            if st.button("Logout", key="ai_logout_confirm"):
-                st.session_state.logged_in = False
-                st.session_state.username = ""
-                st.session_state.chat_history = []
-                st.session_state.show_logout_dialog = False
-                st.switch_page("welcome.py")
-
-    logout_dialog()
 
 # -----------------------------
 # Demo AI Logic
@@ -66,7 +55,6 @@ def contains_any(text, keywords):
 def demo_ai_response(question):
     q = question.lower()
 
-    # 🔹 Keyword groups (expanded thinking)
     fuel_words = ["fuel", "petrol", "diesel", "gas", "octane"]
     emission_words = ["emission", "co2", "pollution", "smoke", "exhaust"]
     mileage_words = ["mileage", "average", "kmpl", "efficiency", "consumption"]
@@ -80,28 +68,24 @@ def demo_ai_response(question):
     • Maintain steady driving speed  
 
     Proper fuel usage improves mileage and reduces CO₂ emissions.""",
-
         """**Why Fuel Choice Matters**
     • Correct fuel ensures proper combustion  
     • Prevents engine knocking  
     • Improves long-term engine health  
 
     Fuel quality directly impacts performance and efficiency.""",
-
         """**Fuel Consumption Reduction Tips**
     • Avoid aggressive acceleration  
     • Do not overload the vehicle  
     • Keep fuel system clean  
 
     These habits reduce unnecessary fuel wastage.""",
-
         """**Impact of Poor Fuel Usage**
     • Incomplete combustion  
     • Higher emissions  
     • Reduced mileage  
 
     Using correct fuel prevents engine inefficiency.""",
-
         """**Smart Fuel Practices**
     • Refuel from trusted stations  
     • Follow vehicle fuel recommendations  
@@ -110,7 +94,6 @@ def demo_ai_response(question):
     This helps lower running costs and emissions."""
     ]
 
-
     emission_responses = [
         """**Understanding CO₂ Emissions**
     • Engine size affects emission levels  
@@ -118,28 +101,24 @@ def demo_ai_response(question):
     • Poor maintenance worsens emissions  
 
     Smooth driving helps reduce environmental impact.""",
-
         """**Emission Control Tips**
     • Maintain emission systems regularly  
     • Avoid sudden braking and acceleration  
     • Reduce idle time in traffic  
 
     These steps help control pollution.""",
-
         """**Why Emissions Increase**
     • Faulty exhaust system  
     • Incorrect fuel usage  
     • Poor engine condition  
 
     Timely servicing reduces harmful emissions.""",
-
         """**Reducing Vehicle Pollution**
     • Plan routes to avoid congestion  
     • Maintain steady speeds  
     • Keep engine tuned  
 
     These practices lower carbon output.""",
-
         """**Environmental Impact Awareness**
     • High emissions affect air quality  
     • Vehicles contribute to climate change  
@@ -155,28 +134,24 @@ def demo_ai_response(question):
     • Reduce unnecessary vehicle load  
 
     Better mileage saves fuel and money.""",
-
         """**Low Mileage Causes**
     • Sudden acceleration  
     • Overloaded vehicle  
     • Poor maintenance  
 
     Fixing these improves fuel efficiency.""",
-
         """**Mileage Optimization Tips**
     • Use cruise control on highways  
     • Avoid frequent short trips  
     • Switch off engine during long stops  
 
     These habits improve average fuel economy.""",
-
         """**Fuel Economy Best Practices**
     • Gentle braking  
     • Proper gear shifting  
     • Regular servicing  
 
     Good driving habits lead to better mileage.""",
-
         """**Why Mileage Matters**
     • Reduces fuel costs  
     • Lowers emissions  
@@ -192,28 +167,24 @@ def demo_ai_response(question):
     • Air filter cleaning improves combustion  
 
     Maintenance lowers emissions and fuel usage.""",
-
         """**Benefits of Regular Servicing**
     • Better engine performance  
     • Improved fuel economy  
     • Reduced breakdown risk  
 
     Well-maintained vehicles pollute less.""",
-
         """**Essential Maintenance Checks**
     • Engine oil level  
     • Tire pressure  
     • Brake condition  
 
     Routine checks improve vehicle reliability.""",
-
         """**Impact of Poor Maintenance**
     • Increased fuel consumption  
     • Higher emissions  
     • Reduced engine life  
 
     Timely servicing prevents these issues.""",
-
         """**Smart Maintenance Habits**
     • Follow service schedule  
     • Fix issues early  
@@ -229,28 +200,24 @@ def demo_ai_response(question):
     • Environment-friendly technology  
 
     They support sustainable mobility.""",
-
         """**Why Choose EVs**
     • Reduced fuel dependency  
     • Lower running costs  
     • Cleaner air  
 
     Electric vehicles are future-ready.""",
-
         """**Hybrid Vehicle Advantages**
     • Combines fuel and electric power  
     • Better fuel efficiency  
     • Lower emissions  
 
     Hybrids are a practical eco-option.""",
-
         """**Environmental Benefits of EVs**
     • No tailpipe emissions  
     • Reduced noise pollution  
     • Lower carbon footprint  
 
     EVs help fight climate change.""",
-
         """**Transition to Electric Mobility**
     • Government incentives available  
     • Growing charging infrastructure  
@@ -259,23 +226,17 @@ def demo_ai_response(question):
     EV adoption supports clean energy goals."""
     ]
 
-    # 🔹 Intent detection (this is the key upgrade)
     if contains_any(q, fuel_words):
         return random.choice(fuel_responses)
-
     if contains_any(q, mileage_words):
         return random.choice(mileage_responses)
-
     if contains_any(q, emission_words):
         return random.choice(emission_responses)
-
     if contains_any(q, maintenance_words):
         return random.choice(maintenance_responses)
-
     if contains_any(q, electric_words):
         return random.choice(electric_responses)
 
-    # 🔹 Fallback (general intelligence)
     return (
         "**Eco-Friendly Driving Advice**\n"
         "• Drive smoothly and avoid harsh braking\n"
@@ -299,9 +260,6 @@ for chat in st.session_state.chat_history:
     st.markdown("---")
 
 # -----------------------------
-# Input Box
-# -----------------------------
-# -----------------------------
 # Input Form (Enter = Send)
 # -----------------------------
 with st.form(key="chat_form", clear_on_submit=True):
@@ -313,11 +271,9 @@ with st.form(key="chat_form", clear_on_submit=True):
 
 if send and question.strip():
     answer = demo_ai_response(question)
-
     st.session_state.chat_history.append({
         "question": question,
         "answer": answer
     })
-
     st.rerun()
 

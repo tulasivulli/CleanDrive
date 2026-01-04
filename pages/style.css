@@ -1,3 +1,4 @@
+
 /* ===============================
    GLOBAL STYLES
 ================================ */
@@ -39,7 +40,7 @@ body {
     font-size: 14px;
     white-space: nowrap;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #f1f1f1;
+    color: black;
 }
 
 /* Seamless infinite scroll */
@@ -56,3 +57,4 @@ body {
 .eco-wrapper:hover .eco-track {
     animation-play-state: paused;
 }
+
